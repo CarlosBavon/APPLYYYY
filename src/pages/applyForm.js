@@ -31,7 +31,8 @@ function ApplyForm() {
     e.preventDefault();
 
     try {
-      const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || 
+        (process.env.NODE_ENV === 'production' ? '' : 'http://localhost:5000');
       const response = await fetch(`${backendUrl}/api/apply`, {
         method: 'POST',
         headers: {
