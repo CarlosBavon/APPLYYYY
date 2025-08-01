@@ -3,7 +3,7 @@ services:
     name: gf-app
     env: node
     plan: free
-    buildCommand: npm install && npm run build
+    buildCommand: npm ci && npm run build
     startCommand: npm run server
     healthCheckPath: /api/health
     envVars:
@@ -15,3 +15,5 @@ services:
         sync: false
       - key: RECIPIENT_EMAIL
         sync: false
+      - key: PORT
+        value: 10000
