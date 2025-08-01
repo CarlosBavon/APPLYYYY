@@ -31,7 +31,8 @@ function ApplyForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch('/api/apply', {
+      const backendUrl = process.env.REACT_APP_BACKEND_URL || '';
+      const response = await fetch(`${backendUrl}/api/apply`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -49,9 +50,9 @@ function ApplyForm() {
         alert('Failed to submit application: ' + error.error);
       }
     } catch (error) {
-        console.error('Error submitting application:', error);
-        alert('Failed to submit application. Please try again.');
-      }
+      console.error('Error submitting application:', error);
+      alert('Failed to submit application. Please try again.');
+    }
   };
 
   if (submitted) {
@@ -70,40 +71,40 @@ function ApplyForm() {
     <div className="app-container">
       <h1 className="application-title">Girlfriend Application Form</h1>
       <p className="disclaimer">Disclaimer: Approval subject to chemistry, humor, and snack-sharing compatibility.</p>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-section">
           <h2>📝 Personal Details</h2>
           <label>
             Full Name:
-            <input 
-              type="text" 
-              name="name" 
-              value={formData.name} 
-              onChange={handleChange} 
-              required 
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              required
             />
           </label>
 
           <label>
             Age:
-            <input 
-              type="number" 
-              name="age" 
-              value={formData.age} 
-              onChange={handleChange} 
+            <input
+              type="number"
+              name="age"
+              value={formData.age}
+              onChange={handleChange}
               min="18"
-              required 
+              required
             />
           </label>
 
           <label>
             Instagram Handle:
-            <input 
-              type="text" 
-              name="instagram" 
-              value={formData.instagram} 
-              onChange={handleChange} 
+            <input
+              type="text"
+              name="instagram"
+              value={formData.instagram}
+              onChange={handleChange}
             />
           </label>
 
@@ -129,49 +130,49 @@ function ApplyForm() {
 
         <div className="form-section">
           <h2>✔️ Skills & Qualifications</h2>
-          
+
           <label>
             Strength in cuddling:
-            <input 
-              type="range" 
-              name="cuddleRating" 
-              min="1" 
-              max="5" 
-              value={formData.cuddleRating} 
-              onChange={handleChange} 
+            <input
+              type="range"
+              name="cuddleRating"
+              min="1"
+              max="5"
+              value={formData.cuddleRating}
+              onChange={handleChange}
             />
             <span>{formData.cuddleRating}/5</span>
           </label>
 
           <label>
             Tolerance for bad puns:
-            <input 
-              type="range" 
-              name="punTolerance" 
-              min="1" 
-              max="5" 
-              value={formData.punTolerance} 
-              onChange={handleChange} 
+            <input
+              type="range"
+              name="punTolerance"
+              min="1"
+              max="5"
+              value={formData.punTolerance}
+              onChange={handleChange}
             />
             <span>{formData.punTolerance}/5</span>
           </label>
 
           <label className="checkbox">
-            <input 
-              type="checkbox" 
-              name="sharesFood" 
-              checked={formData.sharesFood} 
-              onChange={handleChange} 
+            <input
+              type="checkbox"
+              name="sharesFood"
+              checked={formData.sharesFood}
+              onChange={handleChange}
             />
             Willing to share food (last fry clause applies)
           </label>
 
           <label className="checkbox">
-            <input 
-              type="checkbox" 
-              name="handlesWeirdness" 
-              checked={formData.handlesWeirdness} 
-              onChange={handleChange} 
+            <input
+              type="checkbox"
+              name="handlesWeirdness"
+              checked={formData.handlesWeirdness}
+              onChange={handleChange}
             />
             Can handle my weirdness
           </label>
@@ -179,36 +180,36 @@ function ApplyForm() {
 
         <div className="form-section">
           <h2>💑 Scenario Responses</h2>
-          
+
           <fieldset>
             <legend>If I sing in the shower, you will:</legend>
             <label>
-              <input 
-                type="radio" 
-                name="showerSingingReaction" 
-                value="join" 
-                checked={formData.showerSingingReaction === 'join'} 
-                onChange={handleChange} 
+              <input
+                type="radio"
+                name="showerSingingReaction"
+                value="join"
+                checked={formData.showerSingingReaction === 'join'}
+                onChange={handleChange}
               />
               Join in harmoniously
             </label>
             <label>
-              <input 
-                type="radio" 
-                name="showerSingingReaction" 
-                value="record" 
-                checked={formData.showerSingingReaction === 'record'} 
-                onChange={handleChange} 
+              <input
+                type="radio"
+                name="showerSingingReaction"
+                value="record"
+                checked={formData.showerSingingReaction === 'record'}
+                onChange={handleChange}
               />
               Record and blackmail me later
             </label>
             <label>
-              <input 
-                type="radio" 
-                name="showerSingingReaction" 
-                value="ignore" 
-                checked={formData.showerSingingReaction === 'ignore'} 
-                onChange={handleChange} 
+              <input
+                type="radio"
+                name="showerSingingReaction"
+                value="ignore"
+                checked={formData.showerSingingReaction === 'ignore'}
+                onChange={handleChange}
               />
               Pretend you hear nothing
             </label>
@@ -217,32 +218,32 @@ function ApplyForm() {
           <fieldset>
             <legend>Our ideal date is:</legend>
             <label>
-              <input 
-                type="radio" 
-                name="idealDate" 
-                value="netflix" 
-                checked={formData.idealDate === 'netflix'} 
-                onChange={handleChange} 
+              <input
+                type="radio"
+                name="idealDate"
+                value="netflix"
+                checked={formData.idealDate === 'netflix'}
+                onChange={handleChange}
               />
               Netflix + takeout
             </label>
             <label>
-              <input 
-                type="radio" 
-                name="idealDate" 
-                value="roadtrip" 
-                checked={formData.idealDate === 'roadtrip'} 
-                onChange={handleChange} 
+              <input
+                type="radio"
+                name="idealDate"
+                value="roadtrip"
+                checked={formData.idealDate === 'roadtrip'}
+                onChange={handleChange}
               />
               Spontaneous road trip
             </label>
             <label>
-              <input 
-                type="radio" 
-                name="idealDate" 
-                value="fancy" 
-                checked={formData.idealDate === 'fancy'} 
-                onChange={handleChange} 
+              <input
+                type="radio"
+                name="idealDate"
+                value="fancy"
+                checked={formData.idealDate === 'fancy'}
+                onChange={handleChange}
               />
               Fancy dinner (with pajamas underneath)
             </label>
@@ -252,11 +253,11 @@ function ApplyForm() {
         <div className="form-section">
           <h2>🐾 References</h2>
           <label className="checkbox">
-            <input 
-              type="checkbox" 
-              name="petApproval" 
-              checked={formData.petApproval} 
-              onChange={handleChange} 
+            <input
+              type="checkbox"
+              name="petApproval"
+              checked={formData.petApproval}
+              onChange={handleChange}
             />
             Pet approval (Dogs' votes count double)
           </label>
@@ -265,12 +266,12 @@ function ApplyForm() {
         <div className="form-section">
           <h2>📜 Terms & Conditions</h2>
           <label className="checkbox">
-            <input 
-              type="checkbox" 
-              name="terms" 
-              checked={formData.terms} 
-              onChange={handleChange} 
-              required 
+            <input
+              type="checkbox"
+              name="terms"
+              checked={formData.terms}
+              onChange={handleChange}
+              required
             />
             I agree to: laugh at 60% of your jokes, "not" steal hoodies, and fight over the thermostat
           </label>
