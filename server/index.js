@@ -1,19 +1,40 @@
 const express = require('express');
 const cors = require('cors');
 const nodemailer = require('nodemailer');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Middleware
+const allowedOrigins = [
+  'http://localhost:3000', // Local development
+  'http://localhost:3001',
+  'https://apply-rouge.vercel.app', // Vercel deployment
+  process.env.FRONTEND_URL, // From environment variable
+  // Add your production domain here
+].filter(Boolean); // Remove any undefined values
+
 app.use(cors({
-  origin: [
-    'http://localhost:3000', // Local development
-    'https://apply-rouge.vercel.app' // Replace with your actual frontend URL
-  ]
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
 }));
 app.use(express.json());
+
+// Serve static files from the React app build directory in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../build')));
+}
 
 // Validate environment variables
 const validateEnvVars = () => {
@@ -146,8 +167,19 @@ app.post('/api/apply', async (req, res) => {
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'Server is running!' });
+  res.json({ 
+    status: 'Server is running!',
+    environment: process.env.NODE_ENV || 'development',
+    timestamp: new Date().toISOString()
+  });
 });
+
+// Serve React app for all non-API routes in production
+if (process.env.NODE_ENV === 'production') {
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, '../build', 'index.html'));
+  });
+}
 
 // Start server
 const envValid = validateEnvVars();

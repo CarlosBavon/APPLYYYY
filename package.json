@@ -24,7 +24,11 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "server": "node server/index.js",
-    "dev": "concurrently \"npm run server\" \"npm start\""
+    "dev": "concurrently \"npm run server\" \"npm start\"",
+    "prod": "npm run build && npm run server",
+    "heroku-postbuild": "npm run build",
+    "deploy:frontend": "npm run build",
+    "deploy:backend": "node server/index.js"
   },
   "eslintConfig": {
     "extends": [
